@@ -1,7 +1,7 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Zombie Darkness Pack",
+    "name": "NocheOscura",
     "description": "Only zombies spawn in darkness. Zombies have greatly extended detection range and can sense through walls.",
     "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     "version": [1, 0, 0],
