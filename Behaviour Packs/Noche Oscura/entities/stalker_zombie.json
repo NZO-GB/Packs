@@ -513,6 +513,11 @@
         "singular_pickup": true
       },
       "minecraft:spawn_egg_interaction": {},
+      "minecraft:offspring": {
+        "offspring_pairs": {
+          "noche:stalker_zombie": "noche:stalker_zombie"
+        }
+      },
       "minecraft:type_family": {
         "family": [
           "zombie",
