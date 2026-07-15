@@ -15,9 +15,6 @@
         "default": "geometry.zombie.v1.8",
         "baby": "geometry.zombie.baby"
       },
-      "spawn_egg": {
-        "texture": "spawn_egg_zombie"
-      },
       "scripts": {
         "pre_animation": [
           "v.use_dedicated_baby_armor = true;",

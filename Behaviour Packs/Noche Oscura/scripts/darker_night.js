@@ -3,10 +3,10 @@ import { world, system } from "@minecraft/server";
 // ── Configuration ────────────────────────────────────────────────────────────
 const DARKER_NIGHT_CHANCE = 1;       // 20% chance each day
 const STALKER_ZOMBIE_ID   = "noche:stalker_zombie";
-const SPAWN_INTERVAL_TICKS = 200;       // how often to attempt spawning (every 10s)
-const MAX_TRACKERS_PER_PLAYER = 4;      // max tracker zombies near each player
-const SPAWN_RADIUS = 24;               // blocks from player to try spawning
-const SPAWN_RADIUS_MIN = 10;           // minimum distance (don't spawn on top of player)
+const SPAWN_INTERVAL_TICKS = 40;       // how often to attempt spawning (every 10s)
+const MAX_TRACKERS_PER_PLAYER = 18;    // max tracker zombies near each player
+const SPAWN_RADIUS = 40;               // blocks from player to try spawning
+const SPAWN_RADIUS_MIN = 15;           // minimum distance (don't spawn on top of player)
 
 // In-memory state (resets on world reload — acceptable for this mechanic)
 let isDarkerNight = false;
@@ -34,6 +34,7 @@ function isNight(time) {
 
 // ── Daily roll at midday ──────────────────────────────────────────────────────
 function checkDarkerNight() {
+  const OVERWORLD = world.getDimension("overworld");
   const { time, day } = getDayAndTime();
 
   // Roll once per day, around midday (6000 ± 200 ticks)
@@ -43,15 +44,22 @@ function checkDarkerNight() {
     isDarkerNight = roll < DARKER_NIGHT_CHANCE;
 
     if (isDarkerNight) {
-      world.sendMessage("§8§lThe darkness stirs... tonight will be different.");
+      world.sendMessage("§8§lLas sombras se remueven... Esta noche va a ser más oscura.")
+      OVERWORLD.runCommand("gamerule doMobSpawning false");
+      OVERWORLD.runCommand("gamerule playersSleepingPercentage  101");;
     } else {
+      
       // Clear any leftover state from previous darker night
+      world.sendMessage("§8§lLas sombras se disipan, están a salvo...");
       isDarkerNight = false;
     }
   }
 
   // Clear at sunrise
-  if (time >= 23000 && time <= 23200) {
+  if (time == 24000) {
+    world.sendMessage("§8§lLas sombras se disipan, están a salvo...")
+    OVERWORLD.runCommand("gamerule doMobSpawning true");
+    OVERWORLD.runCommand("gamerule playersSleepingPercentage  100");
     isDarkerNight = false;
   }
 }
@@ -60,7 +68,7 @@ function checkDarkerNight() {
 function trySpawnTrackers() {
   if (!isDarkerNight) return;
 
-  const overworld = world.getDimension("overworld");
+  const OVERWORLD = world.getDimension("overworld");
 
   for (const player of world.getPlayers()) {
     // Only spawn at night
@@ -68,7 +76,7 @@ function trySpawnTrackers() {
     if (!isNight(time)) continue;
 
     // Count existing tracker zombies near this player
-    const nearby = overworld.getEntities({
+    const nearby = OVERWORLD.getEntities({
       type: STALKER_ZOMBIE_ID,
       location: player.location,
       maxDistance: SPAWN_RADIUS + 10
@@ -82,22 +90,27 @@ function trySpawnTrackers() {
     const spawnX = Math.floor(player.location.x + Math.cos(angle) * dist);
     const spawnZ = Math.floor(player.location.z + Math.sin(angle) * dist);
 
-    // Use the player's Y as a starting point; Bedrock will adjust to surface
+    const top = OVERWORLD.getTopmostBlock({
+    x: spawnX,
+    z: spawnZ
+    });
+
     const spawnLocation = {
       x: spawnX,
-      y: player.location.y,
+      y: top.location.y + 1,
       z: spawnZ
     };
 
     try {
-      const block = overworld.getBlock(spawnLocation);
-      if (block && overworld.getBrightness(spawnLocation) <= 7) {
-        overworld.spawnEntity(STALKER_ZOMBIE_ID, spawnLocation);
+      const block = OVERWORLD.getBlock(spawnLocation);
+      if (block && OVERWORLD.getLightLevel(spawnLocation) <= 7) {
+        OVERWORLD.spawnEntity(STALKER_ZOMBIE_ID, spawnLocation);
       }
     } catch (e) {
-      // Location may be unloaded or invalid — silently skip
+      world.sendMessage(`§c${e}`);
+      console.error(e);
     }
-
+  }
 }
 
 // ── Main tick loop ────────────────────────────────────────────────────────────
@@ -109,4 +122,4 @@ system.runInterval(() => {
     spawnTick = 0;
     trySpawnTrackers();
   }
-}, 1)};
+}, 1);

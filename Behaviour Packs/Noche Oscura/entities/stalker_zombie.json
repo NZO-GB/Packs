@@ -35,18 +35,33 @@
         "priority": 1
       },
       "minecraft:behavior.look_at_player": {
-        "look_distance": 6,
+        "look_distance": 30,
         "priority": 8
       },
-      "minecraft:behavior.melee_box_attack": {
+        "minecraft:behavior.melee_box_attack": {
+        "priority": 4,                        
         "can_spread_on_fire": true,
-        "priority": 4
+        "track_target": true,
+        "require_complete_path": false,       
+        "path_inner_boundary": 16,            
+        "inner_boundary_time_increase": 5.0,  
+        "path_outer_boundary": 32,            
+        "outer_boundary_time_increase": 10.0,
+        "speed_multiplier": 1.4  
+      },
+      "minecraft:behavior.move_towards_target": {
+        "priority": 5,
+        "speed_multiplier": 2,
+        "within_radius": 64  
       },
       "minecraft:behavior.nearest_attackable_target": {
         "reselect_targets": true,
-        "must_see": true,
-        "within_radius": 25,
-        "must_see_forget_duration": 17,
+        "must_see": false,
+        "within_radius": 64,
+        "target_search_height": 40,
+        "scan_interval": 60,
+        "must_see_forget_duration": 300,
+        "target_acquisition_probability": 1.0,
         "entity_types": [
           {
             "filters": {
@@ -55,76 +70,27 @@
                   "test": "is_family",
                   "subject": "other",
                   "value": "player"
-                },
-                {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "snowgolem"
-                },
-                {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "irongolem"
                 }
               ]
             },
-            "max_dist": 35
-          },
-          {
-            "filters": {
-              "any_of": [
-                {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "villager"
-                },
-                {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "wandering_trader"
-                }
-              ]
-            },
-            "max_dist": 35,
-            "must_see": false
-          },
-          {
-            "filters": {
-              "all_of": [
-                {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "baby_turtle"
-                },
-                {
-                  "test": "in_water",
-                  "subject": "other",
-                  "value": false
-                }
-              ]
-            },
-            "max_dist": 35
+            "max_dist": 64
           }
         ],
         "priority": 2
       },
       "minecraft:behavior.pickup_items": {
-        "can_pickup_any_item": true,
-        "excluded_items": [
-          "minecraft:glow_ink_sac"
-        ],
-        "pickup_based_on_chance": true,
-        "goal_radius": 2,
-        "priority": 6,
-        "max_dist": 3,
-        "speed_multiplier": 1
+        "priority": 4,
+        "max_dist": 10,
+        "goal_radius": 2.0,
+        "speed_multiplier": 1.2,
+        "can_pickup_any_item": false  
       },
       "minecraft:behavior.random_look_around": {
         "priority": 9
       },
       "minecraft:behavior.random_stroll": {
         "priority": 7,
-        "speed_multiplier": 1
+        "speed_multiplier": 0.8
       },
       "minecraft:behavior.stomp_turtle_egg": {
         "goal_radius": 1.14,
@@ -221,7 +187,7 @@
       "minecraft:nameable": {},
       "minecraft:navigation.walk": {
         "can_break_doors": true,
-        "is_amphibious": true,
+        "is_amphibious": false,         
         "can_pass_doors": true,
         "can_walk": true
       },
@@ -513,18 +479,8 @@
         "singular_pickup": true
       },
       "minecraft:spawn_egg_interaction": {},
-      "minecraft:offspring": {
-        "offspring_pairs": {
-          "noche:stalker_zombie": "noche:stalker_zombie"
-        }
-      },
       "minecraft:type_family": {
-        "family": [
-          "zombie",
-          "undead",
-          "monster",
-          "mob"
-        ]
+        "family": [ "zombie", "monster", "mob" ]
       }
     },
     "component_groups": {
@@ -573,124 +529,6 @@
       "minecraft:can_have_equipment": {
         "minecraft:equipment": {
           "table": "loot_tables/entities/zombie_equipment.json"
-        }
-      },
-      "minecraft:convert_to_baby_drowned": {
-        "minecraft:is_shaking": {},
-        "minecraft:transformation": {
-          "delay": {
-            "value": 15
-          },
-          "drop_equipment": true,
-          "into": "minecraft:drowned<minecraft:as_baby>",
-          "transformation_sound": "convert_to_drowned"
-        }
-      },
-      "minecraft:look_to_start_drowned_transformation": {
-        "minecraft:environment_sensor": {
-          "triggers": [
-            {
-              "event": "minecraft:start_transforming",
-              "filters": {
-                "test": "is_underwater"
-              }
-            },
-            {
-              "event": "minecraft:on_start_riding_zombie_horse",
-              "filters": {
-                "all_of": [
-                  {
-                    "test": "is_vehicle_family",
-                    "value": "zombiehorse"
-                  },
-                  {
-                    "domain": "minecraft:is_riding_zombie_horse",
-                    "test": "bool_property",
-                    "value": false
-                  }
-                ]
-              }
-            },
-            {
-              "event": "minecraft:on_stop_riding_zombie_horse",
-              "filters": {
-                "all_of": [
-                  {
-                    "operator": "not",
-                    "test": "is_vehicle_family",
-                    "value": "zombiehorse"
-                  },
-                  {
-                    "domain": "minecraft:is_riding_zombie_horse",
-                    "test": "bool_property"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "minecraft:convert_to_drowned": {
-        "minecraft:is_shaking": {},
-        "minecraft:transformation": {
-          "delay": {
-            "value": 15
-          },
-          "drop_equipment": true,
-          "into": "minecraft:drowned<minecraft:as_adult>",
-          "transformation_sound": "convert_to_drowned"
-        }
-      },
-      "minecraft:start_drowned_transformation": {
-        "minecraft:environment_sensor": {
-          "triggers": [
-            {
-              "event": "minecraft:stop_transforming",
-              "filters": {
-                "test": "is_underwater",
-                "value": false
-              }
-            },
-            {
-              "event": "minecraft:on_start_riding_zombie_horse",
-              "filters": {
-                "all_of": [
-                  {
-                    "test": "is_vehicle_family",
-                    "value": "zombiehorse"
-                  },
-                  {
-                    "domain": "minecraft:is_riding_zombie_horse",
-                    "test": "bool_property",
-                    "value": false
-                  }
-                ]
-              }
-            },
-            {
-              "event": "minecraft:on_stop_riding_zombie_horse",
-              "filters": {
-                "all_of": [
-                  {
-                    "operator": "not",
-                    "test": "is_vehicle_family",
-                    "value": "zombiehorse"
-                  },
-                  {
-                    "domain": "minecraft:is_riding_zombie_horse",
-                    "test": "bool_property"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        "minecraft:timer": {
-          "looping": false,
-          "time": 30,
-          "time_down_event": {
-            "event": "minecraft:convert_to_drowned"
-          }
         }
       },
       "minecraft:zombie_adult": {
@@ -837,10 +675,6 @@
               {
                 "trigger": "minecraft:as_baby",
                 "weight": 425
-              },
-              {
-                "trigger": "minecraft:as_baby_jockey",
-                "weight": 75
               }
             ]
           },

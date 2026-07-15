@@ -5,13 +5,26 @@
     "description": "Only zombies spawn in darkness. Zombies have greatly extended detection range and can sense through walls.",
     "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     "version": [1, 0, 0],
-    "min_engine_version": [1, 20, 0]
+    "min_engine_version": [1, 21, 100]
   },
   "modules": [
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "dc4f76b9-b0c1-490a-8d56-4d0a91b348b2",
+      "entry": "scripts/darker_night.js",
+      "version": [1, 0, 0]
+    },
     {
       "type": "data",
       "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
       "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.3.0"
     }
   ]
 }
