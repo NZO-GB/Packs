@@ -1,0 +1,16 @@
+{
+  "entity_sounds": {
+    "entities": {
+      "noche:stalker_zombie": {
+        "volume": 1.0,
+        "pitch": [1.0, 1.0],
+        "events": {
+          "ambient": "mob.stalker_zombie.idle",
+          "hurt": "mob.stalker_zombie.hurt",
+          "death": "mob.stalker_zombie.death",
+          "step": "mob.zombie.step"
+        }
+      }
+    }
+  }
+}

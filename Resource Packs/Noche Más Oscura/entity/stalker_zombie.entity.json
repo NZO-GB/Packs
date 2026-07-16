@@ -23,11 +23,10 @@
           "v.riding_y_offset_with_respect_to_player = 1.0;",
           "v.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
           "v.unscaled_riding_y_offset = v.riding_y_offset_with_respect_to_player + v.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
-          "v.riding_y_offset = v.riding_y_offset_baby_scaling * math.abs(v.unscaled_riding_y_offset) + v.unscaled_riding_y_offset + v.riding_y_offset_baby_scaling * 0.2f;",
+          "v.riding_y_offset = v.riding_y_offset_baby_scaling * math.abs(v.unscaled_riding_y_offset) + v.unscaled_riding_y_offset + v.riding_y_offset_baby_scaling * 0.2;",
           "v.item_use_duration = query.is_using_item ? ((v.item_use_duration ?? 0.0) + query.delta_time * 20.0) : 0.0;",
           "v.item_use_normalized = v.item_use_duration / query.main_hand_item_max_duration;",
           "v.melee_spear_equipped = query.equipped_item_any_tag('slot.weapon.mainhand', 'minecraft:is_spear');",
-          "(v.melee_spear_equipped) ? {",
           "  t.melee_spear_use_finish_raise_tick = query.kinetic_weapon_delay;",
           "  t.melee_spear_use_finish_sway_tick = t.melee_spear_use_finish_raise_tick + query.kinetic_weapon_dismount_duration;",
           "  t.melee_spear_use_start_sway_tick = t.melee_spear_use_finish_sway_tick - 20.0;",
@@ -50,8 +49,7 @@
           "  v.tp_melee_spear_use_arm_rotation_y = t.melee_spear_use_sway_scale_fast * 1.0;",
           "  v.tp_melee_spear_use_arm_rotation_z = t.melee_spear_use_sway_scale_slow * 0.5;",
           "  v.tp_melee_spear_use_item_rotation_x = t.melee_spear_use_raise_progress * 60.0 + t.melee_spear_use_raise_back_progress * -60.0;",
-          "  v.tp_melee_spear_use_attachable_rotation_z = t.melee_spear_use_raise_progress * 90.0 + t.melee_spear_use_sway_progress * -90.0;",
-          "};"
+          "  v.tp_melee_spear_use_attachable_rotation_z = t.melee_spear_use_raise_progress * 90.0 + t.melee_spear_use_sway_progress * -90.0;"
         ],
         "variables": {
           "variable.item_use_normalized": "public",
@@ -106,7 +104,6 @@
         "use_item_progress": "animation.humanoid.use_item_progress",
         "zombie_attack_bare_hand": "animation.zombie.attack_bare_hand",
         "swimming": "animation.zombie.swimming",
-        "humanoid_big_head_controller": "controller.animation.humanoid.baby_big_head",
         "look_at_target_controller": "controller.animation.humanoid.look_at_target",
         "move_controller": "controller.animation.humanoid.move",
         "riding.body": "animation.humanoid.riding.body",

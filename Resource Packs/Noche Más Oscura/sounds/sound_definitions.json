@@ -1,0 +1,38 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "mob.stalker_zombie.idle": {
+      "category": "hostile",
+      "sounds": [
+        {
+          "name": "sounds/mob/stalker_zombie/idle1"
+        },
+        {
+          "name": "sounds/mob/stalker_zombie/idle2"
+        }
+      ]
+    },
+    "mob.stalker_zombie.hurt": {
+      "category": "hostile",
+      "sounds": [
+        {
+          "name": "sounds/mob/stalker_zombie/hurt1"
+        },
+        {
+          "name": "sounds/mob/stalker_zombie/hurt2"
+        }
+      ]
+    },
+    "mob.stalker_zombie.death": {
+      "category": "hostile",
+      "sounds": [
+        {
+          "name": "sounds/mob/stalker_zombie/death1"
+        },
+        {
+          "name": "sounds/mob/stalker_zombie/death2"
+        }
+      ]
+    }
+  }
+}

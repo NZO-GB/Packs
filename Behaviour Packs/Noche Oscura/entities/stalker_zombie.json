@@ -38,21 +38,20 @@
         "look_distance": 30,
         "priority": 8
       },
-        "minecraft:behavior.melee_box_attack": {
-        "priority": 4,                        
+      "minecraft:behavior.melee_box_attack": {
+        "priority": 4,
         "can_spread_on_fire": true,
         "track_target": true,
-        "require_complete_path": false,       
-        "path_inner_boundary": 16,            
-        "inner_boundary_time_increase": 5.0,  
-        "path_outer_boundary": 32,            
+        "require_complete_path": false,
+        "path_inner_boundary": 16,
+        "inner_boundary_time_increase": 5.0,
+        "path_outer_boundary": 32,
         "outer_boundary_time_increase": 10.0,
-        "speed_multiplier": 1.4  
+        "speed_multiplier": 1.6
       },
-      "minecraft:behavior.move_towards_target": {
-        "priority": 5,
-        "speed_multiplier": 2,
-        "within_radius": 64  
+      "minecraft:follow_range": {
+        "value": 64,
+        "max": 64
       },
       "minecraft:behavior.nearest_attackable_target": {
         "reselect_targets": true,
@@ -83,14 +82,14 @@
         "max_dist": 10,
         "goal_radius": 2.0,
         "speed_multiplier": 1.2,
-        "can_pickup_any_item": false  
+        "can_pickup_any_item": false
       },
       "minecraft:behavior.random_look_around": {
         "priority": 9
       },
       "minecraft:behavior.random_stroll": {
         "priority": 7,
-        "speed_multiplier": 0.8
+        "speed_multiplier": 0.7
       },
       "minecraft:behavior.stomp_turtle_egg": {
         "goal_radius": 1.14,
@@ -124,7 +123,6 @@
               "test": "is_underwater"
             }
           },
-
           {
             "event": "minecraft:on_start_riding_zombie_horse",
             "filters": {
@@ -178,6 +176,11 @@
             "filters": {
               "test": "in_lava"
             }
+          },
+          {
+            "cause": "drowning",
+            "damage_per_tick": 1,
+            "filters": { "test": "in_contact_with_water" }
           }
         ]
       },
@@ -187,298 +190,65 @@
       "minecraft:nameable": {},
       "minecraft:navigation.walk": {
         "can_break_doors": true,
-        "is_amphibious": false,         
+        "is_amphibious": false,
         "can_pass_doors": true,
         "can_walk": true
       },
       "minecraft:physics": {},
-      "minecraft:pushable_by_entity": {
-      },
-      "minecraft:pushable_by_block": {
-      },
+      "minecraft:pushable_by_entity": {},
+      "minecraft:pushable_by_block": {},
       "minecraft:rotation_locked_to_vehicle": {},
       "minecraft:shareables": {
         "items": [
-          {
-            "item": "minecraft:netherite_sword",
-            "priority": 0,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:diamond_sword",
-            "priority": 1,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:iron_sword",
-            "priority": 2,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:golden_sword",
-            "priority": 3,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:copper_sword",
-            "priority": 4,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:stone_sword",
-            "priority": 5,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:wooden_sword",
-            "priority": 6,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:netherite_spear",
-            "priority": 0,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:diamond_spear",
-            "priority": 1,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:iron_spear",
-            "priority": 2,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:golden_spear",
-            "priority": 3,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:copper_spear",
-            "priority": 4,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:stone_spear",
-            "priority": 5,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:wooden_spear",
-            "priority": 6,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:netherite_helmet",
-            "priority": 0,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:diamond_helmet",
-            "priority": 1,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:iron_helmet",
-            "priority": 2,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:chainmail_helmet",
-            "priority": 3,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:golden_helmet",
-            "priority": 4,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:copper_helmet",
-            "priority": 5,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:leather_helmet",
-            "priority": 6,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:turtle_helmet",
-            "priority": 7,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:skull:0",
-            "priority": 8,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:skull:1",
-            "priority": 8,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:carved_pumpkin",
-            "priority": 8,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:netherite_chestplate",
-            "priority": 0,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:diamond_chestplate",
-            "priority": 1,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:iron_chestplate",
-            "priority": 2,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:chainmail_chestplate",
-            "priority": 3,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:golden_chestplate",
-            "priority": 4,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:copper_chestplate",
-            "priority": 5,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:leather_chestplate",
-            "priority": 6,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:netherite_leggings",
-            "priority": 0,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:diamond_leggings",
-            "priority": 1,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:iron_leggings",
-            "priority": 2,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:chainmail_leggings",
-            "priority": 3,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:golden_leggings",
-            "priority": 4,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:copper_leggings",
-            "priority": 5,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:leather_leggings",
-            "priority": 6,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:netherite_boots",
-            "priority": 0,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:diamond_boots",
-            "priority": 1,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:iron_boots",
-            "priority": 2,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:chainmail_boots",
-            "priority": 3,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:golden_boots",
-            "priority": 4,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:copper_boots",
-            "priority": 5,
-            "surplus_amount": 1,
-            "want_amount": 1
-          },
-          {
-            "item": "minecraft:leather_boots",
-            "priority": 6,
-            "surplus_amount": 1,
-            "want_amount": 1
-          }
+          { "item": "minecraft:netherite_sword", "priority": 0, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:diamond_sword", "priority": 1, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:iron_sword", "priority": 2, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:golden_sword", "priority": 3, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:copper_sword", "priority": 4, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:stone_sword", "priority": 5, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:wooden_sword", "priority": 6, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:netherite_spear", "priority": 0, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:diamond_spear", "priority": 1, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:iron_spear", "priority": 2, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:golden_spear", "priority": 3, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:copper_spear", "priority": 4, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:stone_spear", "priority": 5, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:wooden_spear", "priority": 6, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:netherite_helmet", "priority": 0, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:diamond_helmet", "priority": 1, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:iron_helmet", "priority": 2, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:chainmail_helmet", "priority": 3, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:golden_helmet", "priority": 4, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:copper_helmet", "priority": 5, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:leather_helmet", "priority": 6, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:turtle_helmet", "priority": 7, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:skull:0", "priority": 8, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:skull:1", "priority": 8, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:carved_pumpkin", "priority": 8, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:netherite_chestplate", "priority": 0, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:diamond_chestplate", "priority": 1, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:iron_chestplate", "priority": 2, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:chainmail_chestplate", "priority": 3, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:golden_chestplate", "priority": 4, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:copper_chestplate", "priority": 5, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:leather_chestplate", "priority": 6, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:netherite_leggings", "priority": 0, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:diamond_leggings", "priority": 1, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:iron_leggings", "priority": 2, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:chainmail_leggings", "priority": 3, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:golden_leggings", "priority": 4, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:copper_leggings", "priority": 5, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:leather_leggings", "priority": 6, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:netherite_boots", "priority": 0, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:diamond_boots", "priority": 1, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:iron_boots", "priority": 2, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:chainmail_boots", "priority": 3, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:golden_boots", "priority": 4, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:copper_boots", "priority": 5, "surplus_amount": 1, "want_amount": 1 },
+          { "item": "minecraft:leather_boots", "priority": 6, "surplus_amount": 1, "want_amount": 1 }
         ],
         "singular_pickup": true
       },
-      "minecraft:spawn_egg_interaction": {},
       "minecraft:type_family": {
         "family": [ "zombie", "monster", "mob" ]
       }
@@ -487,14 +257,8 @@
       "minecraft:not_on_zombie_horse": {
         "minecraft:behavior.use_kinetic_weapon": {
           "approach_distance": 10,
-          "reposition_distance": {
-            "min": 6,
-            "max": 7
-          },
-          "cooldown_distance": {
-            "min": 9,
-            "max": 11
-          },
+          "reposition_distance": { "min": 6, "max": 7 },
+          "cooldown_distance": { "min": 9, "max": 11 },
           "weapon_reach_multiplier": 0.5,
           "weapon_min_speed_multiplier": 0.2,
           "hijack_mount_navigation": true,
@@ -508,15 +272,9 @@
       "minecraft:on_zombie_horse": {
         "minecraft:behavior.use_kinetic_weapon": {
           "approach_distance": 12,
-          "reposition_distance": {
-            "min": 8,
-            "max": 9
-          },
+          "reposition_distance": { "min": 8, "max": 9 },
           "reposition_speed_multiplier": 1.4,
-          "cooldown_distance": {
-            "min": 11,
-            "max": 13
-          },
+          "cooldown_distance": { "min": 11, "max": 13 },
           "cooldown_speed_multiplier": 1.4,
           "weapon_reach_multiplier": 0.5,
           "weapon_min_speed_multiplier": 0.2,
@@ -545,17 +303,11 @@
           "value": 0.23
         },
         "minecraft:rideable": {
-          "family_types": [
-            "baby_undead"
-          ],
+          "family_types": [ "baby_undead" ],
           "seat_count": 1,
           "seats": {
             "lock_rider_rotation": 0,
-            "position": [
-              0,
-              1.175,
-              -0.35
-            ]
+            "position": [ 0, 1.175, -0.35 ]
           }
         },
         "minecraft:collision_box": {
@@ -576,16 +328,10 @@
         },
         "minecraft:collision_box": {
           "height": 1.96,
-          "width": 0.98   
+          "width": 0.98
         },
         "minecraft:type_family": {
-          "family": [
-            "baby_undead",
-            "zombie",
-            "undead",
-            "monster",
-            "mob"
-          ]
+          "family": [ "baby_undead", "zombie", "undead", "monster", "mob" ]
         }
       },
       "minecraft:zombie_default": {
@@ -612,13 +358,7 @@
           "table": "loot_tables/entities/zombie_rider.json"
         },
         "minecraft:type_family": {
-          "family": [
-            "zombie_rider",
-            "zombie",
-            "undead",
-            "monster",
-            "mob"
-          ]
+          "family": [ "zombie_rider", "zombie", "undead", "monster", "mob" ]
         }
       }
     },
@@ -627,19 +367,9 @@
         "trigger": "minecraft:as_baby"
       },
       "minecraft:on_stop_riding_zombie_horse": {
-        "add": {
-          "component_groups": [
-            "minecraft:not_on_zombie_horse"
-          ]
-        },
-        "set_property": {
-          "minecraft:is_riding_zombie_horse": false
-        },
-        "remove": {
-          "component_groups": [
-            "minecraft:on_zombie_horse"
-          ]
-        }
+        "add": { "component_groups": [ "minecraft:not_on_zombie_horse" ] },
+        "set_property": { "minecraft:is_riding_zombie_horse": false },
+        "remove": { "component_groups": [ "minecraft:on_zombie_horse" ] }
       },
       "minecraft:spawn_as_rider": {
         "add": {
@@ -649,9 +379,7 @@
             "minecraft:on_zombie_horse"
           ]
         },
-        "set_property": {
-          "minecraft:is_riding_zombie_horse": true
-        }
+        "set_property": { "minecraft:is_riding_zombie_horse": true }
       },
       "minecraft:as_adult": {
         "add": {
@@ -668,71 +396,25 @@
         "sequence": [
           {
             "randomize": [
-              {
-                "trigger": "minecraft:as_adult",
-                "weight": 9500
-              },
-              {
-                "trigger": "minecraft:as_baby",
-                "weight": 425
-              }
+              { "trigger": "minecraft:as_adult", "weight": 9500 },
+              { "trigger": "minecraft:as_baby", "weight": 425 }
             ]
           },
           {
             "randomize": [
               {
-                "add": {
-                  "component_groups": [
-                    "minecraft:can_break_doors"
-                  ]
-                },
+                "add": { "component_groups": [ "minecraft:can_break_doors" ] },
                 "weight": 10
               },
-              {
-                "weight": 90
-              }
+              { "weight": 90 }
             ]
           }
         ]
       },
       "minecraft:on_start_riding_zombie_horse": {
-        "add": {
-          "component_groups": [
-            "minecraft:on_zombie_horse"
-          ]
-        },
-        "set_property": {
-          "minecraft:is_riding_zombie_horse": true
-        },
-        "remove": {
-          "component_groups": [
-            "minecraft:not_on_zombie_horse"
-          ]
-        }
-      },
-      "minecraft:start_transforming": {
-        "add": {
-          "component_groups": [
-            "minecraft:start_drowned_transformation"
-          ]
-        },
-        "remove": {
-          "component_groups": [
-            "minecraft:look_to_start_drowned_transformation"
-          ]
-        }
-      },
-      "minecraft:stop_transforming": {
-        "add": {
-          "component_groups": [
-            "minecraft:look_to_start_drowned_transformation"
-          ]
-        },
-        "remove": {
-          "component_groups": [
-            "minecraft:start_drowned_transformation"
-          ]
-        }
+        "add": { "component_groups": [ "minecraft:on_zombie_horse" ] },
+        "set_property": { "minecraft:is_riding_zombie_horse": true },
+        "remove": { "component_groups": [ "minecraft:not_on_zombie_horse" ] }
       }
     }
   }

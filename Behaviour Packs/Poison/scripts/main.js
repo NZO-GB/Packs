@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server";
 
 const BOUNDARY = 3000;
-const CHECK_INTERVAL = 20;
+const CHECK_INTERVAL = 40;
 const EXEMPT_PLAYERS = ["Lozor10"];
 const WARNING_TICKS = 100; 
 
