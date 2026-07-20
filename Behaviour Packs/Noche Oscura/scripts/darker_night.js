@@ -12,6 +12,7 @@ const SPAWN_RADIUS_MIN = 15;           // minimum distance (don't spawn on top o
 let isDarkerNight = false;
 let lastCheckedDay = -1;
 let spawnTick = 0;
+let zombiesRemaining = 0;
 
 // ── Time helpers ─────────────────────────────────────────────────────────────
 // Bedrock day cycle: 0-23999 ticks
@@ -32,6 +33,16 @@ function isNight(time) {
   return time >= 12500 || time <= 500;
 }
 
+function tryClearNight() {
+  world.sendMessage("tryclearnight debugging")
+  if (isDarkerNight) {
+    world.sendMessage("§8§lLas sombras se disipan, están a salvo...");
+    OVERWORLD.runCommand("gamerule doMobSpawning true");
+    OVERWORLD.runCommand("gamerule playersSleepingPercentage  100");
+    isDarkerNight = false;
+  } 
+}
+
 // ── Daily roll at midday ──────────────────────────────────────────────────────
 function checkDarkerNight() {
   const OVERWORLD = world.getDimension("overworld");
@@ -39,6 +50,7 @@ function checkDarkerNight() {
 
   // Roll once per day, around midday (6000 ± 200 ticks)
   if (day !== lastCheckedDay && time >= 6000 && time <= 6200) {
+    world.sendMessage("debbuging roll")
     lastCheckedDay = day;
     const roll = Math.random();
     isDarkerNight = roll < DARKER_NIGHT_CHANCE;
@@ -46,27 +58,21 @@ function checkDarkerNight() {
     if (isDarkerNight) {
       world.sendMessage("§8§lLas sombras se remueven... Esta noche va a ser más oscura.")
       OVERWORLD.runCommand("gamerule doMobSpawning false");
-      OVERWORLD.runCommand("gamerule playersSleepingPercentage  101");;
+      OVERWORLD.runCommand("gamerule playersSleepingPercentage  101");
+      zombiesRemaining = 40;
     } else {
-      
-      // Clear any leftover state from previous darker night
-      world.sendMessage("§8§lLas sombras se disipan, están a salvo...");
-      isDarkerNight = false;
+        tryClearNight();
     }
   }
-
   // Clear at sunrise
-  if (time == 24000) {
-    world.sendMessage("§8§lLas sombras se disipan, están a salvo...")
-    OVERWORLD.runCommand("gamerule doMobSpawning true");
-    OVERWORLD.runCommand("gamerule playersSleepingPercentage  100");
-    isDarkerNight = false;
+  if (time >= 24000 && time <= 24040) {
+    tryClearNight();
   }
 }
 
 // ── Tracker zombie spawning ───────────────────────────────────────────────────
 function trySpawnTrackers() {
-  if (!isDarkerNight) return;
+  if (!isDarkerNight || zombiesRemaining <= 0) return;
 
   const OVERWORLD = world.getDimension("overworld");
 
@@ -101,14 +107,10 @@ function trySpawnTrackers() {
       z: spawnZ
     };
 
-    try {
-      const block = OVERWORLD.getBlock(spawnLocation);
-      if (block && OVERWORLD.getLightLevel(spawnLocation) <= 7) {
-        OVERWORLD.spawnEntity(STALKER_ZOMBIE_ID, spawnLocation);
-      }
-    } catch (e) {
-      world.sendMessage(`§c${e}`);
-      console.error(e);
+    const block = OVERWORLD.getBlock(spawnLocation);
+    if (block && OVERWORLD.getLightLevel(spawnLocation) <= 7) {
+    OVERWORLD.spawnEntity(STALKER_ZOMBIE_ID, spawnLocation);
+    zombiesRemaining--;
     }
   }
 }

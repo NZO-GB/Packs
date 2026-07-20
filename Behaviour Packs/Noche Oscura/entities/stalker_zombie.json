@@ -35,7 +35,7 @@
         "priority": 1
       },
       "minecraft:behavior.look_at_player": {
-        "look_distance": 30,
+        "look_distance": 64,
         "priority": 8
       },
       "minecraft:behavior.melee_box_attack": {
@@ -45,19 +45,19 @@
         "require_complete_path": false,
         "path_inner_boundary": 16,
         "inner_boundary_time_increase": 5.0,
-        "path_outer_boundary": 32,
+        "path_outer_boundary": 28,
         "outer_boundary_time_increase": 10.0,
         "speed_multiplier": 1.6
       },
       "minecraft:follow_range": {
-        "value": 64,
-        "max": 64
+        "value": 44,
+        "max": 44
       },
       "minecraft:behavior.nearest_attackable_target": {
         "reselect_targets": true,
         "must_see": false,
-        "within_radius": 64,
-        "target_search_height": 40,
+        "within_radius": 44,
+        "target_search_height": 24,
         "scan_interval": 60,
         "must_see_forget_duration": 300,
         "target_acquisition_probability": 1.0,
@@ -72,7 +72,7 @@
                 }
               ]
             },
-            "max_dist": 64
+            "max_dist": 44
           }
         ],
         "priority": 2
@@ -334,20 +334,12 @@
           "family": [ "baby_undead", "zombie", "undead", "monster", "mob" ]
         }
       },
-      "minecraft:zombie_default": {
-        "minecraft:loot": {
-          "table": "loot_tables/entities/zombie.json"
-        }
-      },
       "minecraft:zombie_jockey": {
         "minecraft:behavior.find_mount": {
           "max_failed_attempts": 20,
           "priority": 1,
           "start_delay": 15,
           "within_radius": 16
-        },
-        "minecraft:loot": {
-          "table": "loot_tables/entities/zombie.json"
         }
       },
       "minecraft:zombie_rider": {
@@ -389,6 +381,17 @@
             "minecraft:on_foot",
             "minecraft:not_on_zombie_horse",
             "minecraft:can_have_equipment"
+          ]
+        }
+      },
+      "minecraft:as_baby": {
+        "add": {
+          "component_groups": [
+            "minecraft:zombie_default",
+            "minecraft:zombie_baby",
+            "minecraft:not_on_zombie_horse",
+            "minecraft:can_have_equipment",
+            "minecraft:zombie_jockey"
           ]
         }
       },
