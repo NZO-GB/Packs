@@ -1,8 +1,8 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Pack Exploradores",
-    "description": "Envenena fuera de los límites",
+    "name": "Pack Roles",
+    "description": "Define los roles de Valoria",
     "uuid": "b816c5d9-6e8f-483e-bd83-7dd7bd51da77",
     "version": [1, 0, 0],
     "min_engine_version": [1, 21, 0]
