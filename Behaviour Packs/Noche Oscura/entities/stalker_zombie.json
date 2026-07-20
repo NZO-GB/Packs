@@ -45,7 +45,7 @@
         "require_complete_path": false,
         "path_inner_boundary": 16,
         "inner_boundary_time_increase": 5.0,
-        "path_outer_boundary": 28,
+        "path_outer_boundary": 44,
         "outer_boundary_time_increase": 10.0,
         "speed_multiplier": 1.6
       },
@@ -88,6 +88,7 @@
         "priority": 9
       },
       "minecraft:behavior.random_stroll": {
+        "interval": 100,
         "priority": 7,
         "speed_multiplier": 0.7
       },
@@ -101,7 +102,7 @@
       },
       "minecraft:breathable": {
         "breathes_air": true,
-        "breathes_water": true,
+        "breathes_water": false,
         "suffocate_time": 0,
         "total_supply": 15
       },

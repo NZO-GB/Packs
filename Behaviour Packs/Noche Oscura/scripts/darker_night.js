@@ -30,7 +30,7 @@ function isNight(time) {
 // ── Night lifecycle ────────────────────────────────────────────────────────────
 function activateDarkerNight() {
     isDarkerNight = true;
-    zombiesRemaining = 40;
+    zombiesRemaining = world.getPlayers().length * 40;
     world.sendMessage("§8§lLas sombras se remueven... Esta noche va a ser más oscura.");
     OVERWORLD.runCommand("gamerule doMobSpawning false");
     OVERWORLD.runCommand("gamerule playersSleepingPercentage 101");
