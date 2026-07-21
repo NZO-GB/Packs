@@ -3,7 +3,7 @@ import { world, system } from "@minecraft/server";
 // ── Configuration ────────────────────────────────────────────────────────────
 const DARKER_NIGHT_CHANCE = 1;          
 const STALKER_ZOMBIE_ID   = "noche:stalker_zombie";
-const SPAWN_INTERVAL_TICKS = 40;
+const SPAWN_INTERVAL_TICKS = 30;
 const MAX_TRACKERS_PER_PLAYER = 18;
 const SPAWN_RADIUS = 40;
 const SPAWN_RADIUS_MIN = 15;
@@ -14,6 +14,7 @@ let isDarkerNight = false;
 let lastCheckedDay = -1;
 let spawnTick = 0;
 let zombiesRemaining = 0;
+let nextWave = 2400
 
 // ── Time helpers ─────────────────────────────────────────────────────────────
 function getDayAndTime() {
@@ -30,7 +31,7 @@ function isNight(time) {
 // ── Night lifecycle ────────────────────────────────────────────────────────────
 function activateDarkerNight() {
     isDarkerNight = true;
-    zombiesRemaining = world.getPlayers().length * 40;
+    zombiesRemaining = world.getPlayers().length * 60;
     world.sendMessage("§8§lLas sombras se remueven... Esta noche va a ser más oscura.");
     OVERWORLD.runCommand("gamerule doMobSpawning false");
     OVERWORLD.runCommand("gamerule playersSleepingPercentage 101");
@@ -49,15 +50,14 @@ function deactivateDarkerNight() {
 function checkDarkerNight() {
     const { time, day } = getDayAndTime();
 
-    // Roll once per day at midday (6000–6200)
-    if (day !== lastCheckedDay && time >= 6000 && time <= 6200) {
-        lastCheckedDay = day;
+    if (day !== lastCheckedDay && time >= 8000) {
+        lastCheckedDay = day; // Lock it so it only rolls once per day
         if (Math.random() < DARKER_NIGHT_CHANCE) {
             activateDarkerNight();
         } 
     }
 
-    if (isDarkerNight && time >= 0 && time <= 40) {
+    if (isDarkerNight && time >= 0 && time <= 100) {
         deactivateDarkerNight();
     }
 }
@@ -108,6 +108,16 @@ system.runInterval(() => {
     if (!OVERWORLD) return;
 
     checkDarkerNight();
+
+    // Only count down the wave if Darker Night is active
+    if (isDarkerNight && zombiesRemaining <= 0) {
+        nextWave--;
+        
+        if (nextWave <= 0) {
+            zombiesRemaining = world.getPlayers().length * 60;
+            nextWave = 2400; 
+        }
+    }
 
     spawnTick++;
     if (spawnTick >= SPAWN_INTERVAL_TICKS) {

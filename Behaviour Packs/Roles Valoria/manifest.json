@@ -1,10 +1,10 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Pack Roles",
+    "name": "Roles Valoria",
     "description": "Define los roles de Valoria",
     "uuid": "b816c5d9-6e8f-483e-bd83-7dd7bd51da77",
-    "version": [1, 0, 0],
+    "version": [1, 0, 1],
     "min_engine_version": [1, 21, 0]
   },
   "modules": [
@@ -14,12 +14,17 @@
       "uuid": "8434ca06-cedb-49b2-9a13-7954ddb51e96",
       "entry": "scripts/main.js",
       "version": [1, 0, 0]
+    },
+    {
+      "type": "data",
+      "uuid": "6d067727-2cdd-45fd-9f62-27335172bf94",
+      "version": [1, 0, 0]
     }
   ],
   "dependencies": [
-    {
-      "module_name": "@minecraft/server",
-      "version": "2.7.0"
-    }
-  ]
+      {
+        "module_name": "@minecraft/server",
+        "version": "1.14.0" 
+      }
+    ]
 }
