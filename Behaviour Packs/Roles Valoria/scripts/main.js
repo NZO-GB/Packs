@@ -1,6 +1,7 @@
 import { world, system } from "@minecraft/server";
 import "./roles/roleManager.js";    
 import { initBoundaryDamage } from "./features/boundaryDamage.js";
+import "./workstationManager.js";
 
 system.runTimeout(() => {
   initBoundaryDamage();

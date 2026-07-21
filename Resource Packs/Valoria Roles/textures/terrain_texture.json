@@ -1,0 +1,21 @@
+{
+    "resource_pack_name": "Vroles",
+    "texture_name": "atlas.terrain",
+    "texture_data": {
+        "constructor_bench": {
+            "textures": "textures/blocks/constructor_bench"
+        },
+        "explorador_bench": {
+            "textures": "textures/blocks/explorador_bench"
+        },
+        "pescador_bench": {
+            "textures": "textures/blocks/pescador_bench"
+        },
+        "infernalista_bench": {
+            "textures": "textures/blocks/infernalista_bench"
+        },
+        "granjero_bench": {
+            "textures": "textures/blocks/granjero_bench"
+        }
+    }
+}

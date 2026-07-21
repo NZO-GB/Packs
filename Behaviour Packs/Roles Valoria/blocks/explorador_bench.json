@@ -1,0 +1,26 @@
+{
+    "format_version": "1.21.110",
+    "minecraft:block": {
+        "description": {
+            "identifier": "Vroles:explorador_bench",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_mining": 2,
+            "minecraft:destructible_by_explosion": 10,
+
+            "minecraft:geometry": "minecraft:geometry.full_block",
+
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "explorador_bench",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:selection_box": true,
+            "minecraft:collision_box": true
+        }
+    }
+}

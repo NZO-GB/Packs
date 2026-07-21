@@ -1,0 +1,18 @@
+{
+    "format_version": [1, 21, 110],
+    "Vroles:constructor_bench": {
+        "textures": "constructor_bench"
+    },
+    "Vroles:explorador_bench": {
+        "textures": "explorador_bench"
+    },
+    "Vroles:pescador_bench": {
+        "textures": "pescador_bench"
+    },
+    "Vroles:infernalista_bench": {
+        "textures": "infernalista_bench"
+    },
+    "Vroles:granjero_bench": {
+        "textures": "granjero_bench"
+    }
+}

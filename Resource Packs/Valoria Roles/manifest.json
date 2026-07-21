@@ -1,0 +1,17 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "Valoria Roles",
+        "description": "Resource Pack for Valoria Roles",
+        "uuid": "9f8ef29b-dea1-4782-a178-6f592d6e5aea",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 21, 40]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "beabc0c3-3d72-4fe0-8644-53f3906cb5b3",
+            "version": [1, 0, 0]
+        }
+    ]
+}
