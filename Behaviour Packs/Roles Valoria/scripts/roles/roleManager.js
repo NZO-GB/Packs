@@ -1,15 +1,50 @@
-import { world, system } from "@minecraft/server";
+import {
+  world,
+  system,
+  Player,
+  CommandPermissionLevel,
+  CustomCommandParamType,
+  CustomCommandStatus
+} from "@minecraft/server";
 
 // ----- DATA -----
 const ROLES = {
   INFERNALISTA: "infernalista",
-  EXPLORER: "explorer",
-  GUARD: "guard",
-  MINER: "miner"
+  EXPLORADOR: "explorador",
+  CONSTRUCTOR: "constructor",
+  PESCADOR: "pescador",
+  GRANJERO: "granjero"
 };
 const VALID_ROLES = new Set(Object.values(ROLES));
 const DYNAMIC_PROP_KEY = "player_roles";
 const ADMIN_TAG = "admin";
+
+const roleCache = new Map();
+
+function loadRoleCacheFor(player) {
+  const set = new Set(getPlayerRoles(player));
+  roleCache.set(player.id, set);
+  return set;
+}
+
+export function cachedHasRole(player, role) {
+  const set = roleCache.get(player.id) ?? loadRoleCacheFor(player);
+  return set.has(role.toLowerCase());
+}
+
+export function refreshRoleCache() {
+  for (const player of world.getAllPlayers()) {
+    loadRoleCacheFor(player);
+  }
+}
+
+world.afterEvents.playerSpawn.subscribe((event) => {
+  if (event.initialSpawn) loadRoleCacheFor(event.player);
+});
+
+world.afterEvents.playerLeave.subscribe((event) => {
+  roleCache.delete(event.playerId);
+});
 
 // ----- FUNCTIONS -----
 function isValidRole(role) {
@@ -34,8 +69,9 @@ export function addRole(player, role) {
   if (!current.includes(normalized)) {
     current.push(normalized);
     player.setDynamicProperty(DYNAMIC_PROP_KEY, JSON.stringify(current));
-    player.addTag(normalized);
+    player.addTag("role_" + normalized);
   }
+  loadRoleCacheFor(player);
   return { success: true };
 }
 
@@ -46,85 +82,164 @@ export function removeRole(player, role) {
 
   const updated = current.filter(r => r !== normalized);
   player.setDynamicProperty(DYNAMIC_PROP_KEY, JSON.stringify(updated));
-  player.removeTag(normalized);
+  player.removeTag("role_" + normalized);
+  loadRoleCacheFor(player);
   return { success: true };
 }
 
 export function clearRoles(player) {
   const current = getPlayerRoles(player);
-  for (const r of current) player.removeTag(r);
+  for (const r of current) player.removeTag("role_" + r);
   player.setDynamicProperty(DYNAMIC_PROP_KEY, JSON.stringify([]));
+  loadRoleCacheFor(player);
   return { success: true };
 }
 
-// ----- SCRIPT EVENT COMMANDS (Stable) -----
-system.afterEvents.scriptEventReceive.subscribe((event) => {
-  // 1. Only respond to our specific command ID
-  if (event.id !== "valoria:role") return;
+function isAdmin(player) {
+  if (!player) return false;
+  return player.hasTag(ADMIN_TAG) || player.commandPermissionLevel >= CommandPermissionLevel.GameDirectors;
+}
 
-  // 2. Make sure the entity running the command is a player
-  const sender = event.sourceEntity;
-  if (!sender || sender.typeId !== "minecraft:player") return;
+function resolveTarget(sender, players) {
+  return players && players.length > 0 ? players[0] : sender;
+}
 
-  // 3. Parse the message (e.g., "grant miner Steve" -> ["grant", "miner", "Steve"])
-  const args = event.message.trim().split(/\s+/);
-  const action = args[0]?.toLowerCase();
-  const targetRole = args[1]?.toLowerCase();
-  const targetName = args[2];
+function getCommandPlayer(origin) {
+  return origin.sourceEntity instanceof Player ? origin.sourceEntity : undefined;
+}
 
-  // Relying entirely on tags is safer in stable builds than checking isOp()
-  const isAdmin = sender.hasTag(ADMIN_TAG); 
+// ----- SLASH COMMANDS -----
+function registerRoleCommands(registry) {
+  registry.registerEnum("role:role_name", Array.from(VALID_ROLES));
 
-  if (action === "list") {
-    const roles = getPlayerRoles(sender);
-    sender.sendMessage("§b[Roles] Tus roles: §e" + (roles.join(", ") || "Ninguno"));
-    return;
-  }
-
-  if (!isAdmin) {
-    sender.sendMessage("§c[Roles] Sin permisos.");
-    return;
-  }
-
-  let target = sender;
-  if (targetName) {
-    target = world.getAllPlayers().find(p => p.name.toLowerCase() === targetName.toLowerCase());
-    if (!target) {
-      sender.sendMessage("§cJugador '" + targetName + "' no encontrado.");
-      return;
+  registry.registerCommand(
+    {
+      name: "role:vlist",
+      description: "Lista tus roles actuales.",
+      permissionLevel: CommandPermissionLevel.Any
+    },
+    (origin) => {
+      const player = getCommandPlayer(origin);
+      if (!player) {
+        return { status: CustomCommandStatus.Failure, message: "Solo un jugador puede usar esto." };
+      }
+      const roles = getPlayerRoles(player);
+      system.run(() => {
+        player.sendMessage("§b[Roles] Tus roles: §e" + (roles.join(", ") || "Ninguno"));
+      });
+      return { status: CustomCommandStatus.Success };
     }
-  }
+  );
 
-  switch (action) {
-    case "grant": {
-      if (!targetRole) { sender.sendMessage("§cUso: /scriptevent valoria:role grant <rol> [jugador]"); return; }
-      const r = addRole(target, targetRole);
-      if (!r.success) { sender.sendMessage("§c" + r.error); return; }
-      sender.sendMessage("§aRol '§e" + targetRole + "§a' → §e" + target.name);
-      target.sendMessage("§aTe dieron el rol: §e" + targetRole);
-      break;
+  registry.registerCommand(
+    {
+      name: "role:vgrant",
+      description: "Otorga un rol a un jugador.",
+      permissionLevel: CommandPermissionLevel.Any,
+      mandatoryParameters: [
+        { type: CustomCommandParamType.Enum, name: "role:role_name" }
+      ],
+      optionalParameters: [
+        { type: CustomCommandParamType.PlayerSelector, name: "player" }
+      ]
+    },
+    (origin, roleName, players) => {
+      const sender = getCommandPlayer(origin);
+      if (!isAdmin(sender)) {
+        return { status: CustomCommandStatus.Failure, message: "Sin permisos." };
+      }
+      const target = resolveTarget(sender, players);
+      if (!target) {
+        return { status: CustomCommandStatus.Failure, message: "Jugador objetivo no encontrado." };
+      }
+      system.run(() => {
+        const result = addRole(target, roleName);
+        if (!result.success) { sender.sendMessage("§c" + result.error); return; }
+        sender.sendMessage("§aRol '§e" + roleName + "§a' → §e" + target.name);
+        target.sendMessage("§aTe dieron el rol: §e" + roleName);
+      });
+      return { status: CustomCommandStatus.Success };
     }
-    case "revoke": {
-      if (!targetRole) { sender.sendMessage("§cUso: /scriptevent valoria:role revoke <rol> [jugador]"); return; }
-      const r = removeRole(target, targetRole);
-      if (!r.success) { sender.sendMessage("§c" + r.error); return; }
-      sender.sendMessage("§cRol '§e" + targetRole + "§c' quitado a §e" + target.name);
-      target.sendMessage("§cTe quitaron el rol: §e" + targetRole);
-      break;
+  );
+
+  registry.registerCommand(
+    {
+      name: "role:vrevoke",
+      description: "Quita un rol a un jugador.",
+      permissionLevel: CommandPermissionLevel.Any,
+      mandatoryParameters: [
+        { type: CustomCommandParamType.Enum, name: "role:role_name" }
+      ],
+      optionalParameters: [
+        { type: CustomCommandParamType.PlayerSelector, name: "player" }
+      ]
+    },
+    (origin, roleName, players) => {
+      const sender = getCommandPlayer(origin);
+      if (!isAdmin(sender)) {
+        return { status: CustomCommandStatus.Failure, message: "Sin permisos." };
+      }
+      const target = resolveTarget(sender, players);
+      if (!target) {
+        return { status: CustomCommandStatus.Failure, message: "Jugador objetivo no encontrado." };
+      }
+      system.run(() => {
+        const result = removeRole(target, roleName);
+        if (!result.success) { sender.sendMessage("§c" + result.error); return; }
+        sender.sendMessage("§cRol '§e" + roleName + "§c' quitado a §e" + target.name);
+        target.sendMessage("§cTe quitaron el rol: §e" + roleName);
+      });
+      return { status: CustomCommandStatus.Success };
     }
-    case "clear": {
-      clearRoles(target);
-      sender.sendMessage("§eRoles borrados de §e" + target.name);
-      target.sendMessage("§eSe borraron todos tus roles.");
-      break;
+  );
+
+  registry.registerCommand(
+    {
+      name: "role:vclear",
+      description: "Borra todos los roles de un jugador.",
+      permissionLevel: CommandPermissionLevel.Any,
+      optionalParameters: [
+        { type: CustomCommandParamType.PlayerSelector, name: "player" }
+      ]
+    },
+    (origin, players) => {
+      const sender = getCommandPlayer(origin);
+      if (!isAdmin(sender)) {
+        return { status: CustomCommandStatus.Failure, message: "Sin permisos." };
+      }
+      const target = resolveTarget(sender, players);
+      if (!target) {
+        return { status: CustomCommandStatus.Failure, message: "Jugador objetivo no encontrado." };
+      }
+      system.run(() => {
+        clearRoles(target);
+        sender.sendMessage("§eRoles borrados de §e" + target.name);
+        target.sendMessage("§eSe borraron todos tus roles.");
+      });
+      return { status: CustomCommandStatus.Success };
     }
-    default:
-      sender.sendMessage(
-        "§fComandos:\n" +
-        "§e/scriptevent valoria:role list\n" +
-        "§e/scriptevent valoria:role grant <rol> [jugador]\n" +
-        "§e/scriptevent valoria:role revoke <rol> [jugador]\n" +
-        "§e/scriptevent valoria:role clear [jugador]"
-      );
-  }
+  );
+
+  registry.registerCommand(
+    {
+      name: "role:vrefresh",
+      description: "Reconstruye la caché de roles en memoria desde los datos guardados.",
+      permissionLevel: CommandPermissionLevel.Any
+    },
+    (origin) => {
+      const sender = getCommandPlayer(origin);
+      if (!isAdmin(sender)) {
+        return { status: CustomCommandStatus.Failure, message: "Sin permisos." };
+      }
+      refreshRoleCache();
+      system.run(() => {
+        sender?.sendMessage("§aCaché de roles reconstruida.");
+      });
+      return { status: CustomCommandStatus.Success };
+    }
+  );
+}
+
+system.beforeEvents.startup.subscribe((init) => {
+  registerRoleCommands(init.customCommandRegistry);
 });
