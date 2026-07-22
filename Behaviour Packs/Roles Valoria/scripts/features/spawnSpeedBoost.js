@@ -28,8 +28,6 @@ export function initSpeedBoost() {
             );
             if (amplifier < 0) continue;
 
-            console.warn(`spawnSpeedBoost: ${player.name} dist=${distance.toFixed(0)} amp=${amplifier}`);
-
              const riding = player.getComponent("riding");
             const target = riding?.entityRidingOn ?? player;
 

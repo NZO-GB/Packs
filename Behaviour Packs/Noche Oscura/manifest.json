@@ -12,7 +12,7 @@
       "type": "script",
       "language": "javascript",
       "uuid": "dc4f76b9-b0c1-490a-8d56-4d0a91b348b2",
-      "entry": "scripts/darker_night.js",
+      "entry": "scripts/main.js",
       "version": [1, 0, 0]
     },
     {

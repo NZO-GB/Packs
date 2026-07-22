@@ -92,14 +92,6 @@
         "priority": 7,
         "speed_multiplier": 0.7
       },
-      "minecraft:behavior.stomp_turtle_egg": {
-        "goal_radius": 1.14,
-        "priority": 5,
-        "search_height": 2,
-        "interval": 20,
-        "search_range": 10,
-        "speed_multiplier": 1
-      },
       "minecraft:breathable": {
         "breathes_air": true,
         "breathes_water": false,
