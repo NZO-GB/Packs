@@ -1,0 +1,40 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "mob.blaze.breathe": {
+      "category": "hostile",
+      "sounds": [
+        {
+          "name": "sounds/mob/blaze/breathe1",
+          "pitch": 0.65
+        },
+        {
+          "name": "sounds/mob/blaze/breathe2",
+          "pitch": 0.65
+        }
+      ]
+    },
+    "mob.blaze.hit": {
+      "category": "hostile",
+      "sounds": [
+        {
+          "name": "sounds/mob/blaze/hit1",
+          "pitch": 0.65
+        },
+        {
+          "name": "sounds/mob/blaze/hit2",
+          "pitch": 0.65
+        }
+      ]
+    },
+    "mob.blaze.death": {
+      "category": "hostile",
+      "sounds": [
+        {
+          "name": "sounds/mob/blaze/death",
+          "pitch": 0.60
+        }
+      ]
+    }
+  }
+}

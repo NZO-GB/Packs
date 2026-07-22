@@ -6,12 +6,9 @@ import {
 } from "@minecraft/server";
 
 const STALKER_ZOMBIE_ID = "noche:stalker_zombie";
-
-// Stores data just for the current night
 const nightScores = new Map();
 
 export function initScoreboard() {
-    // 1. Listen for kills
     world.afterEvents.entityDie.subscribe((event) => {
         const { deadEntity, damageSource } = event;
 
@@ -34,19 +31,17 @@ export function initScoreboard() {
     });
 }
 
-// Fetches and formats the stats privately for the requesting player
 function sendPlayerStats(player) {
     const playerName = player.name;
     const nightKills = nightScores.has(playerName) ? nightScores.get(playerName).nightKills : 0;
     const totalKills = player.getDynamicProperty("total_stalker_kills") || 0;
 
-    player.sendMessage("§8§l--- [ Tu Registro de Supervivencia ] ---");
-    player.sendMessage(`§eBajas esta noche: §c${nightKills}`);
+    player.sendMessage("§8§l--- [ Tus Stalkers Eliminados ] ---");
+    player.sendMessage(`§eEsta noche: §c${nightKills}`);
     player.sendMessage(`§eTotal histórico: §4${totalKills}`);
     player.sendMessage("§8§l-----------------------------------------");
 }
 
-// Clears the map at the start of a new Darker Night
 export function resetNightScores() {
     nightScores.clear();
 }

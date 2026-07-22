@@ -2,9 +2,9 @@
   "format_version": 2,
   "header": {
     "name": "Darker Night - Resources",
-    "description": "Tracker zombie texture",
+    "description": "Stalker zombie texture",
     "uuid": "f185158e-c878-48df-a86c-677f38afdab8",
-    "version": [1, 0, 0],
+    "version": [1, 0, 1],
     "min_engine_version": [1, 21, 0]
   },
   "modules": [

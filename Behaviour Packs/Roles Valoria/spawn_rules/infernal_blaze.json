@@ -1,0 +1,40 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:spawn_rules": {
+    "description": {
+      "identifier": "valoria:infernal_blaze",
+      "population_control": "monster"
+    },
+    "conditions": [
+      {
+        "minecraft:spawns_on_surface": {},
+        "minecraft:spawns_underground": {},
+        "minecraft:spawns_on_block_filter": {
+          "blocks": [
+            "minecraft:netherrack",
+            "minecraft:soul_sand",
+            "minecraft:crimson_nylium",
+            "minecraft:warped_nylium",
+            "minecraft:basalt",
+            "minecraft:blackstone"
+          ]
+        },
+        "minecraft:biome_filter": {
+          "test": "has_biome_tag",
+          "value": "nether"
+        },
+        "minecraft:weight": {
+          "default": 1
+        },
+        "minecraft:herd": {
+          "min_size": 1,
+          "max_size": 1
+        },
+        "minecraft:density_limit": {
+          "surface": 1,
+          "underground": 1
+        }
+      }
+    ]
+  }
+}

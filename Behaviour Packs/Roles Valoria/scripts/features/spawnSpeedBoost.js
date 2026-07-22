@@ -1,8 +1,8 @@
 import { world, system } from "@minecraft/server";
-import { isEnabled } from "./featureFlags.js";
+import { cachedHasRole } from "../roles/roleManager.js"; 
 
 const CHECK_INTERVAL = 40;          // how often to recompute, in ticks
-const BLOCKS_PER_LEVEL = 1500;       // +1 amplifier per this many blocks from spawn
+const BLOCKS_PER_LEVEL = 1600;       // +1 amplifier per this many blocks from spawn
 const MAX_AMPLIFIER = 3;            // cap so it doesn't scale forever
 const DEAD_ZONE = 1000;              // no boost within this radius of spawn
 const EFFECT_DURATION = CHECK_INTERVAL + 20; // outlives the gap between checks
@@ -14,6 +14,7 @@ export function initSpeedBoost() {
 
         for (const player of world.getAllPlayers()) {
             if (player.dimension.id !== "minecraft:overworld") continue;
+            if (!cachedHasRole(player, "explorador")) continue;
 
             const { x, z } = player.location;
             const dx = x - spawn.x;
@@ -28,7 +29,7 @@ export function initSpeedBoost() {
             );
             if (amplifier < 0) continue;
 
-             const riding = player.getComponent("riding");
+            const riding = player.getComponent("riding");
             const target = riding?.entityRidingOn ?? player;
 
             target.addEffect("minecraft:speed", EFFECT_DURATION, {

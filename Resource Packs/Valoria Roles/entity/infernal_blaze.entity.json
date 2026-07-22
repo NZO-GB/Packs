@@ -1,0 +1,35 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "valoria:infernal_blaze",
+      "materials": {
+        "body": "entity_alphatest",
+        "head": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/infernal_blaze"
+      },
+      "geometry": {
+        "default": "geometry.blaze"
+      },
+      "animations": {
+        "look_at_target": "animation.common.look_at_target",
+        "move": "animation.blaze.move"
+      },
+      "scripts": {
+        "animate": [
+          "look_at_target",
+          "move"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.blaze"
+      ],
+      "spawn_egg": {
+        "base_color": "#2c1609",
+        "overlay_color": "#ff4500"
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "valoria:infernal_blaze",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false,
+      "population_control": "monster"
+    },
+    "components": {
+        "minecraft:follow_range": {
+            "value": 48,
+            "max": 48
+        },
+        "minecraft:is_hidden_when_invisible": {},
+        "minecraft:experience_reward": {
+            "on_death": "query.last_hit_by_player ? 10 : 0"
+        },
+        "minecraft:scale": {
+            "value": 1.75
+        },
+        "minecraft:type_family": {
+            "family": ["blaze", "monster", "mob"]
+        },
+        "minecraft:health": {
+            "value": 80,
+            "max": 80
+        },
+        "minecraft:fire_immune": {},
+        "minecraft:knockback_resistance": {
+            "value": 0.75
+        },
+        "minecraft:movement": {
+            "value": 0.15
+        },
+        "minecraft:navigation.hover": {
+            "can_path_over_water": true,
+            "can_path_from_air": true
+            },
+        "minecraft:movement.hover": {
+        },
+        "minecraft:behavior.float": {
+            "priority": 0
+            },
+        "minecraft:behavior.hover": {
+            "priority": 4,
+            "speed_multiplier": 1.0
+        },
+        "minecraft:jump.static": {},
+        "minecraft:can_fly": {},
+        "minecraft:shooter": {
+            "def": "minecraft:small_fireball",
+            "aux_val": 0,
+            "sound": "mob.blaze.breathe",
+            "power": 1.6
+        },
+        "minecraft:behavior.ranged_attack": {
+            "priority": 2,
+            "attack_interval_min": 2.0,
+            "attack_interval_max": 4.0,
+            "attack_radius": 36.0,
+            "charge_charged_trigger": 0.0,
+            "charge_shoot_trigger": 2.0,
+            "burst_shots": 5,
+            "burst_interval": 0.25
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+            "priority": 1,
+            "within_radius": 48.0,
+            "must_see": true,
+            "entity_types": [
+                {
+                    "filters": {
+                    "all_of": [
+                {
+                "test": "is_family",
+                "subject": "other",
+                "value": "player"
+                },
+                {
+                "none_of": [
+                    {
+                        "test": "has_tag",
+                        "subject": "other",
+                        "value": "Infernalista"
+                    }
+                ]
+                }
+                ]
+      },
+      "max_dist": 48.0
+            }
+            ]
+        },
+        "minecraft:behavior.random_stroll": {
+            "priority": 5,
+            "speed_multiplier": 0.8
+        },
+        "minecraft:behavior.look_at_player": {
+            "priority": 6,
+            "look_distance": 8
+        },
+        "minecraft:behavior.random_look_around": {
+            "priority": 7
+        },
+        "minecraft:physics": {
+            "has_gravity": false
+        },
+        "minecraft:pushable": {
+            "is_pushable": true,
+            "is_pushable_by_piston": true
+        }
+    }
+  }
+}

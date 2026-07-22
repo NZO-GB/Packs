@@ -1,6 +1,12 @@
 {
   "format_version": "1.14.0",
   "sound_definitions": {
+    "noche.horde_horn": {
+      "category": "hostile",
+      "sounds": [
+        "sounds/horde_horn"
+      ]
+    },
     "mob.stalker_zombie.idle": {
       "category": "hostile",
       "sounds": [
