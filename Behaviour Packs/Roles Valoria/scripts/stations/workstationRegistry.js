@@ -1,26 +1,26 @@
 export const WORKSTATIONS = {
-    "Vroles:constructor_bench": {
+    "vroles:constructor_bench": {
         requiredTag: "constructor",
-        onUse: "construir"
+        title: "Constructor Bench"
     },
 
-    "Vroles:explorador_bench": {
+    "vroles:explorador_bench": {
         requiredTag: "explorador",
-        onUse: "explorar"
+        title: "Explorador Bench"
     },
 
-    "Vroles:pescador_bench": {
+    "vroles:pescador_bench": {
         requiredTag: "pescador",
-        onUse: "pescar"
+        title: "Pescador Bench"
     },
 
-    "Vroles:infernalista_bench": {
+    "vroles:infernalista_bench": {
         requiredTag: "infernalista",
-        onUse: "infernar"
+        title: "Infernalista Bench"
     },
 
-    "Vroles:granjero_bench": {
+    "vroles:granjero_bench": {
         requiredTag: "granjero",
-        onUse: "granjear"
+        title: "Granjero Bench"
     }
 };

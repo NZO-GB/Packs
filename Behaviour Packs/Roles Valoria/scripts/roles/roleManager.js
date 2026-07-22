@@ -34,7 +34,7 @@ export function addRole(player, role) {
   if (!current.includes(normalized)) {
     current.push(normalized);
     player.setDynamicProperty(DYNAMIC_PROP_KEY, JSON.stringify(current));
-    player.addTag("role_" + normalized);
+    player.addTag(normalized);
   }
   return { success: true };
 }
@@ -46,13 +46,13 @@ export function removeRole(player, role) {
 
   const updated = current.filter(r => r !== normalized);
   player.setDynamicProperty(DYNAMIC_PROP_KEY, JSON.stringify(updated));
-  player.removeTag("role_" + normalized);
+  player.removeTag(normalized);
   return { success: true };
 }
 
 export function clearRoles(player) {
   const current = getPlayerRoles(player);
-  for (const r of current) player.removeTag("role_" + r);
+  for (const r of current) player.removeTag(r);
   player.setDynamicProperty(DYNAMIC_PROP_KEY, JSON.stringify([]));
   return { success: true };
 }

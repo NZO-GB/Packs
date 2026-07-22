@@ -1,38 +1,38 @@
-import { world } from "@minecraft/server";
+import { world, system } from "@minecraft/server";
+
 import { WORKSTATIONS } from "./workstationRegistry.js";
-import {
-    construir,
-    explorar,
-    pescar,
-    infernar,
-    granjear
-} from "./workstationHandlers.js";
+import { openWorkbench } from "./workstationUI.js";
+import { hasRole } from "../roles/roleManager.js";
 
-const handlers = {
-    construir,
-    explorar,
-    pescar,
-    infernar,
-    granjear
-};
+const DEBOUNCE_TICKS = 10; // ~0.5s
+const lastInteraction = new Map();
 
-world.beforeEvents.playerInteractWithBlock.subscribe(event => {
+world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
 
     const station = WORKSTATIONS[event.block.typeId];
 
     if (!station)
         return;
 
+    event.cancel = true;
+
     const player = event.player;
+    const now = system.currentTick;
+    const last = lastInteraction.get(player.id) ?? -Infinity;
 
-    if (!player.hasTag(station.requiredTag)) {
-
-        player.sendMessage("§cYou cannot use this workstation.");
-        event.cancel = true;
+    if (now - last < DEBOUNCE_TICKS)
         return;
 
-    }
+    lastInteraction.set(player.id, now);
 
-    handlers[station.handler]?.(player);
+    system.run(() => {
+        if (!hasRole(player, station.requiredTag)) {
+            player.sendMessage(
+                `§cSólo un ${station.requiredTag} puede usar esta mesa de trabajo.`
+            );
+            return;
+        }
+        openWorkbench(player, station);
+    });
 
 });

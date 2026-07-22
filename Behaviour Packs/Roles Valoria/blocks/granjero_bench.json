@@ -2,7 +2,7 @@
     "format_version": "1.21.110",
     "minecraft:block": {
         "description": {
-            "identifier": "Vroles:granjero_bench",
+            "identifier": "vroles:granjero_bench",
             "menu_category": {
                 "category": "construction"
             }

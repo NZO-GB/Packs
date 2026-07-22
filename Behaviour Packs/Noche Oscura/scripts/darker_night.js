@@ -90,7 +90,8 @@ function trySpawnTrackers() {
             z: spawnZ,
         };
 
-        if (OVERWORLD.getBlock(spawnLoc)?.getLightLevel() <= 7) {
+
+        if (OVERWORLD.getLightLevel(spawnLoc) <= 7) {
             OVERWORLD.spawnEntity(STALKER_ZOMBIE_ID, spawnLoc);
             zombiesRemaining--;
             if (zombiesRemaining <= 0) break;

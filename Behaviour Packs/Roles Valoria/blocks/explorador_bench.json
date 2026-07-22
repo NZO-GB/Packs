@@ -2,7 +2,7 @@
     "format_version": "1.21.110",
     "minecraft:block": {
         "description": {
-            "identifier": "Vroles:explorador_bench",
+            "identifier": "vroles:explorador_bench",
             "menu_category": {
                 "category": "construction"
             }
