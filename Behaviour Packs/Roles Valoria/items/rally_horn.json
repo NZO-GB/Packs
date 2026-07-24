@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+        "identifier": "rally:horn",
+        "menu_category": {
+            "category": "equipment"
+        }
+    },
+    "components": {
+      "minecraft:max_stack_size": 16,
+      "minecraft:icon": "rally_horn",
+      "minecraft:display_name": {
+        "value": "item.rally:horn.name"
+      }
+    }
+  }
+}

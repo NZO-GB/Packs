@@ -5,6 +5,7 @@ import "./features/waterRegen.js";
 import { initBoundaryDamage } from "./features/boundaryDamage.js";
 import { initSpeedBoost } from "./features/spawnSpeedBoost.js";
 import "./stations/workstationManager.js";
+import "./items/rally.js";
 
 system.run(() => {
   initBoundaryDamage();

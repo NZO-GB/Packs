@@ -62,9 +62,9 @@ export const WORKSTATIONS = {
         title: "Granjero Bench",
         recipes: [
             {
-                id: "bread",
-                output: { typeId: "minecraft:bread", amount: 1 },
-                inputs: [{ typeId: "minecraft:wheat", amount: 3 }]
+                id: "rally_horn",
+                output: { typeId: "rally:horn", amount: 1 },
+                inputs: [{ typeId: "minecraft:wheat", amount: 1 }]
             }
         ]
     }
