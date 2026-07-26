@@ -4,6 +4,9 @@
   "texture_data": {
     "rally_horn": {
       "textures": "textures/items/rally_horn"
+    },
+    "rally_shell": {
+      "textures": "textures/items/rally_shell"
     }
   }
 }
