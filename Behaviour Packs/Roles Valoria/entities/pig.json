@@ -91,7 +91,7 @@
         },
         "minecraft:timer": {
           "looping": false,
-          "time": 300,
+          "time": 12000,
           "time_down_event": {
             "event": "rally:end_rally"
           }

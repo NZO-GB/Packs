@@ -9,7 +9,7 @@
     },
     "components": {
       "minecraft:behavior.avoid_mob_type": {
-        "priority": 1,
+        "priority": 3,
         "entity_types": [
           {
             "filters": {
@@ -36,9 +36,9 @@
                 }
               ]
             },
-            "max_dist": 6,
+            "max_dist": 3,
             "walk_speed_multiplier": 1.2,
-            "sprint_speed_multiplier": 1.6
+            "sprint_speed_multiplier": 2
           }
         ]
       },
@@ -514,7 +514,7 @@
         },
         "minecraft:timer": {
           "looping": false,
-          "time": 640,
+          "time": 12000,
           "time_down_event": {
             "event": "rally:end_rally"
           }

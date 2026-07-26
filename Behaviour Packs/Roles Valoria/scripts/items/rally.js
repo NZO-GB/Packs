@@ -4,8 +4,8 @@ const RALLIES = [
   {
     itemId: "rally:horn",
     tag: "role_granjero",
-    cooldownTicks: 120,
-    durationTicks: 640, // REMEMBER TO USE THE SAME AS TIMER IN JSON
+    cooldownTicks: 12000,
+    durationTicks: 12000, // REMEMBER TO USE THE SAME AS TIMER IN JSON
     radius: 30,
     maxRally: 10,
     entityTypes: ["minecraft:cow", "minecraft:pig"],
@@ -14,8 +14,8 @@ const RALLIES = [
   {
     itemId: "rally:shell",
     tag: "role_pescador",
-    cooldownTicks: 120,
-    durationTicks: 640, // REMEMBER TO USE THE SAME AS TIMER IN JSON
+    cooldownTicks: 12000,
+    durationTicks: 12000, // REMEMBER TO USE THE SAME AS TIMER IN JSON
     radius: 30,
     maxRally: 10,
     entityTypes: ["minecraft:cod", "minecraft:salmon", "minecraft:pufferfish", "minecraft:tropicalfish"],
