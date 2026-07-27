@@ -7,6 +7,9 @@
     },
     "rally_shell": {
       "textures": "textures/items/rally_shell"
+    },
+    "horse_call": {
+      "textures": "textures/items/horse_call"
     }
   }
 }

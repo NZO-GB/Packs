@@ -1,4 +1,7 @@
 import { world, system } from "@minecraft/server";
+import { consumeItem } from "./consumeItem";
+import { CooldownManager } from "../cooldownManager.js";
+import { hasRole } from "../roles/roleManager.js";
 
 const RALLIES = [
   {
@@ -76,42 +79,28 @@ function activateRally(player, rally) {
   }, rally.durationTicks);
 }
 
-const cooldowns = new Map();
-
 world.afterEvents.itemUse.subscribe((event) => {
   const player = event.source;
   const item = event.itemStack;
 
   const rally = RALLIES.find(r => r.itemId === item.typeId);
   if (!rally) return;
-  if (!player.hasTag(rally.tag)) return;
+  
+  if (!hasRole(player, "pescador")) return;
 
-  const now = system.currentTick;
-  const cooldownKey = rally.itemId + player.name
-  const lastUsed = cooldowns.get(cooldownKey) ?? 0;
-  const cooldownTicks = rally.cooldownTicks;
-
-  player.sendMessage(`time between now and used: ${now - lastUsed}`)
-
-  if (now - lastUsed < cooldownTicks) return;
+  if (!CooldownManager.isReady(player, rally.itemId, rally.cooldownTicks)) {
+    const remaining = CooldownManager.getRemainingTicks(player, rally.itemId, rally.cooldownTicks);
+    const seconds = Math.ceil(remaining / 20);
+    player.onScreenDisplay.setActionBar(`§cWait ${seconds}s before rallying again!`);
+    return;
+  }
 
   if (!rally.onActivate(player, rally)) {
-    return // here's where we skip if (case shell: not in water, case horn: no animals)
+    return; // Skip if conditions aren't met (not in water, no animals, etc.)
   }
 
-  // Consume one item
-  const container = player.getComponent("inventory").container;
-  const slot = player.selectedSlotIndex;
-  const heldItem = container.getItem(slot);
-
-  if (heldItem && heldItem.amount > 1) {
-    heldItem.amount -= 1;
-    container.setItem(slot, heldItem);
-  } else {
-    container.setItem(slot, undefined);
-  }
-
-  cooldowns.set(cooldownKey, now);
+  consumeItem(player);
+  CooldownManager.set(player, rally.itemId);
 
   const count = Math.min(rally.maxRally, entities.length);
   player.onScreenDisplay.setActionBar(`§aReclutadas ${count} criaturas${count !== 1 ? "s" : ""}!`);

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+        "identifier": "horse:call",
+        "menu_category": {
+            "category": "equipment"
+        }
+    },
+    "components": {
+      "minecraft:max_stack_size": 16,
+      "minecraft:icon": "horse_call",
+      "minecraft:display_name": {
+        "value": "item.horse:call.name"
+      }
+    }
+  }
+}

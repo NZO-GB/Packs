@@ -8,40 +8,6 @@
       "is_summonable": true
     },
     "component_groups": {
-      "minecraft:behavior.avoid_mob_type": {
-        "priority": 3,
-        "entity_types": [
-          {
-            "filters": {
-              "all_of": [
-                {
-                  "any_of": [
-                    {
-                      "test": "is_family",
-                      "subject": "other",
-                      "value": "player"
-                    },
-                    {
-                      "test": "is_family",
-                      "subject": "other",
-                      "value": "axolotl"
-                    }
-                  ]
-                },
-                {
-                  "test": "has_tag",
-                  "subject": "other",
-                  "operator": "not",
-                  "value": "role_pescador"
-                }
-              ]
-            },
-            "max_dist": 3,
-            "walk_speed_multiplier": 1.2,
-            "sprint_speed_multiplier": 2
-          }
-        ]
-      },
       "rally:rallied": {
         "minecraft:health": {
           "max": 9,
@@ -95,6 +61,40 @@
       }
     },
     "components": {
+      "minecraft:behavior.avoid_mob_type": {
+        "priority": 3,
+        "entity_types": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "any_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "player"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "axolotl"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_tag",
+                  "subject": "other",
+                  "operator": "not",
+                  "value": "role_pescador"
+                }
+              ]
+            },
+            "max_dist": 3,
+            "walk_speed_multiplier": 1.2,
+            "sprint_speed_multiplier": 2
+          }
+        ]
+      },
       "minecraft:is_hidden_when_invisible": {},
       "minecraft:type_family": {
         "family": [ "cod", "fish" ]

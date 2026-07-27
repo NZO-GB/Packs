@@ -1,0 +1,54 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "valoria:explorer_horse",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/explorer_horse",
+        "saddle": "textures/entity/explorer_horse_saddle"
+      },
+      "geometry": {
+        "default": "geometry.horse.v3"
+      },
+      "animations": {
+        "walk": "animation.horse.v3.walk",
+        "rear": "animation.horse.v3.rear",
+        "tail": "animation.horse.v3.tail"
+      },
+      "scripts": {
+        "initialize": [
+          "variable.stand_anim = 0.0;",
+          "variable.leg_stand_factor = 0.0;",
+          "variable.head_x_rot = 0.0;",
+          "variable.head_y_rot = 0.0;",
+          "variable.eat_anim = 0.0;"
+        ],
+        "pre_animation": [
+          "variable.leg_x_rot_anim = math.sin(query.life_time * 300.0) * query.modified_move_speed * 45.0;",
+          "variable.stand_anim = math.lerp(variable.stand_anim, query.is_standing * (query.modified_move_speed == 0), 0.5);",
+          "variable.leg_stand_factor = math.sin(query.life_time * 300.0) * 1.57;",
+          "variable.head_x_rot = math.clamp(query.target_x_rotation, -20.0, 20.0);",
+          "variable.head_y_rot = math.clamp(query.target_y_rotation, -35.0, 35.0);"
+        ],
+        "animate": [
+          "walk",
+          "rear",
+          { "tail": "math.mod(query.life_time, 7.0) < 2.0" }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.explorer_horse",
+        {
+          "controller.render.explorer_horse_saddle": "query.is_saddled"
+        }
+      ],
+      "spawn_egg": {
+        "base_color": "#533f2a",
+        "overlay_color": "#c19263"
+      }
+    }
+  }
+}
