@@ -7,7 +7,7 @@ import { initSpeedBoost } from "./features/spawnSpeedBoost.js";
 import "./stations/workstationManager.js";
 import "./items/rally.js";
 import { registerHorseSummoner } from "./items/horseSummon.js";
-import { registerHorseProtection } from "./features/horsePolice.js";
+import { registerHorseProtection, initHorseWaterGliding } from "./features/horsePolice.js";
 
 
 system.run(() => {
@@ -16,4 +16,5 @@ system.run(() => {
   world.sendMessage("§a[Roles Valoria] Sistema inicializado correctamente.");
   registerHorseSummoner();
   registerHorseProtection();
+  initHorseWaterGliding();
 });

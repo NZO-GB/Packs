@@ -14,9 +14,11 @@
         "default": "geometry.horse.v3"
       },
       "animations": {
+        "setup": "animation.horse.custom_setup",
         "walk": "animation.horse.v3.walk",
         "rear": "animation.horse.v3.rear",
         "tail": "animation.horse.v3.tail"
+        
       },
       "scripts": {
         "initialize": [
@@ -34,6 +36,7 @@
           "variable.head_y_rot = math.clamp(query.target_y_rotation, -35.0, 35.0);"
         ],
         "animate": [
+          "setup",
           "walk",
           "rear",
           { "tail": "math.mod(query.life_time, 7.0) < 2.0" }

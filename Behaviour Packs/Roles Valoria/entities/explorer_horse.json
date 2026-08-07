@@ -99,6 +99,11 @@
           "range_max": 0.34
         }
       },
+      "minecraft:variable_max_auto_step": {
+        "base_value": 1.0625,
+        "controlled_value": 1.0625,
+        "jump_prevented_value": 0.5625
+      },
       "minecraft:navigation.walk": {
         "can_path_over_water": true,
         "avoid_water": true,

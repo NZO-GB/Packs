@@ -1,26 +1,12 @@
 {
 	"format_version" : "1.8.0",
 	"animations" : {
-		"animation.horse.v3.baby_transform" : {
-			"loop" : true,
-			"bones" : {
-				"body" : {
-					"position" : [ 0.0, "11 * ((0.0625 - query.model_scale) * 16.0)", 0.0 ]
-				},
-				"head" : {
-					"scale" : "1.0 + 0.5 * (1.0 - (query.model_scale * 16.0))"
-				},
-				"legbl" : {
-					"scale" : [ 1.0, "1.0 + ((0.0625 - query.model_scale) * 16.0)", 1.0 ]
-				},
-				"legbr" : {
-					"scale" : [ 1.0, "1.0 + ((0.0625 - query.model_scale) * 16.0)", 1.0 ]
-				},
-				"legfl" : {
-					"scale" : [ 1.0, "1.0 + ((0.0625 - query.model_scale) * 16.0)", 1.0 ]
-				},
-				"legfr" : {
-					"scale" : [ 1.0, "1.0 + ((0.0625 - query.model_scale) * 16.0)", 1.0 ]
+		"animation.horse.custom_setup": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"body": {
+				"rotation": [0, 0, 0]
 				}
 			}
 		},
